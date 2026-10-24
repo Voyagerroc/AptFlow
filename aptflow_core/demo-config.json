@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "mode": "demo",
+  "tools": {
+    "memory": {"adapter": "mock", "enabled": true},
+    "research": {"adapter": "mock", "enabled": true},
+    "script": {"adapter": "mock", "enabled": true},
+    "video": {"adapter": "mock", "enabled": true}
+  }
+}

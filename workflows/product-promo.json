@@ -1,0 +1,25 @@
+{
+  "format": "aptflow-design-spec",
+  "version": "0.1",
+  "status": "not-implemented",
+  "name": "Product research to verified promo video",
+  "backend": "activepieces",
+  "inputs": ["product_url", "audience", "language", "duration_seconds"],
+  "steps": [
+    {"id": "memory", "tool": "notebooklm", "purpose": "Retrieve compact relevant brand facts", "connection": "not-configured"},
+    {"id": "research", "tool": "tinyfish", "purpose": "Research product with source URLs", "connection": "not-configured"},
+    {"id": "script", "tool": "reasoning-model", "purpose": "Write script grounded in gathered evidence", "connection": "provider-not-selected"},
+    {"id": "video", "tool": "heygen", "purpose": "Generate avatar video; persist run ID before polling", "connection": "not-configured"},
+    {"id": "verify", "tool": "media-validator", "purpose": "Inspect downloaded output duration, format and decodability", "connection": "not-implemented"},
+    {"id": "deliver", "tool": "artifact-store", "purpose": "Deliver local video, sources and usage", "connection": "not-implemented"}
+  ],
+  "acceptance": [
+    "Source references are retained",
+    "Unsupported product claims are excluded from script",
+    "Timed-out generation is reconciled before any retry",
+    "Downloaded video is decodable and meets requested duration tolerance",
+    "Unknown provider charges are explicitly labeled unknown"
+  ],
+  "future_tools": ["canva", "descript"],
+  "public_posting": false
+}

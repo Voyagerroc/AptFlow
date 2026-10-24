@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+secrets/
+outputs/
+*.log
+__pycache__/
+.venv/
+aptflow.json
+config/*.local.json
+.local/
+graphify-out/
+*.egg-info/
+build/
+dist/
+.DS_Store

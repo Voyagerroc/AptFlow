@@ -1,0 +1,37 @@
+{
+  "schema_version": "0.1",
+  "synthetic": true,
+  "evidence": [
+    {
+      "id": "demo",
+      "url": "https://example.com/",
+      "finding": "Synthetic fixture. No real research or personal memory."
+    }
+  ],
+  "scenes": [
+    {
+      "title": "Your goal, your tools",
+      "body": "Start with an account-free template and connect only the providers you choose.",
+      "seconds": 5,
+      "evidence_ids": [
+        "demo"
+      ]
+    },
+    {
+      "title": "Bring your configuration",
+      "body": "Keep your own credentials in your own environment. This fixture contains only synthetic information.",
+      "seconds": 5,
+      "evidence_ids": [
+        "demo"
+      ]
+    },
+    {
+      "title": "Inspect every result",
+      "body": "This optional local rendering demonstrates title cards, not a live avatar or video service.",
+      "seconds": 5,
+      "evidence_ids": [
+        "demo"
+      ]
+    }
+  ]
+}
