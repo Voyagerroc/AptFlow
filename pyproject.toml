@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aptflow-starter"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Account-independent starter for specialist-tool workflows"
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -13,6 +13,9 @@ dependencies = []
 
 [project.scripts]
 aptflow = "aptflow_core.cli:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "aptflow_core.__version__"}
 
 [tool.setuptools.packages.find]
 include = ["aptflow_core*"]
