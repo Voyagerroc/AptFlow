@@ -71,11 +71,14 @@ All commands can also be invoked with the installed `aptflow` entry point.
 
 | Command | Purpose | External calls |
 |---|---|---|
+| `python aptflow.py --version` | Print the version without loading configuration | None |
 | `python aptflow.py init [--config PATH]` | Create a demo config; refuses to overwrite it | None |
 | `python aptflow.py doctor [--config PATH]` | Check adapters and required variable names | None |
 | `python aptflow.py plan [--config PATH]` | Print explicit stage mapping and readiness | None |
 | `python aptflow.py run --out PATH [--config PATH]` | Execute the configured mock workflow | None in this starter |
 | `python aptflow.py render BUNDLE --out PATH [--font PATH]` | Render a local title-card MP4 | None |
+
+Both `python aptflow.py --version` and the installed `aptflow --version` use the version declared in `aptflow_core/__init__.py`. The checkout does not require installed package metadata.
 
 Exit codes: `0` for success; `1` for an execution/configuration error or failed `doctor` readiness; `2` for invalid CLI arguments. `plan` can return `0` while reporting `ready: false`: it inspects a configuration rather than executing it.
 

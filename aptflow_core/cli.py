@@ -6,6 +6,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+from . import __version__
 from .config import read_config
 from .media import render
 from .workflow import plan, run
@@ -13,6 +14,7 @@ from .workflow import plan, run
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Account-independent specialist-tool workflow starter")
+    parser.add_argument("--version", action="version", version=f"aptflow {__version__}")
     commands = parser.add_subparsers(dest="command", required=True)
     init = commands.add_parser("init", help="Create a private user config from the demo template")
     init.add_argument("--config", type=Path, default=Path("aptflow.json"))

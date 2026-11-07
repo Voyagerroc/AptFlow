@@ -1,11 +1,14 @@
 import copy
 import json
 import os
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+from aptflow_core import __version__
 from aptflow_core.config import read_config
 from aptflow_core.workflow import plan, run
 
@@ -16,6 +19,21 @@ ROOT = Path(__file__).resolve().parents[1]
 class StarterTests(unittest.TestCase):
     def config(self):
         return read_config(ROOT / "aptflow_core" / "demo-config.json")
+
+    def test_checkout_version_needs_no_config(self):
+        with tempfile.TemporaryDirectory() as directory:
+            command = [sys.executable, str(ROOT / "aptflow.py")]
+            result = subprocess.run(
+                [*command, "--version"], cwd=directory, capture_output=True, text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.stdout.strip(), f"aptflow {__version__}")
+            self.assertEqual(result.stderr, "")
+            invalid = subprocess.run(
+                [*command, "invalid"], cwd=directory, capture_output=True, text=True,
+            )
+            self.assertEqual(invalid.returncode, 2)
+            self.assertEqual(list(Path(directory).iterdir()), [])
 
     def test_demo_runs_without_accounts_or_network(self):
         with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {}, clear=True):
