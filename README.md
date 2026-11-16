@@ -1,5 +1,7 @@
 # AptFlow
 
+[![Account-free checks](https://github.com/Voyagerroc/AptFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/Voyagerroc/AptFlow/actions/workflows/ci.yml)
+
 An account-independent starter for workflows that assign each task to a specialist tool.
 
 **Clone, run the synthetic demo, then bring your own adapters and credentials.** No account, API key, Docker installation or network call is required for the default workflow.
@@ -163,13 +165,9 @@ Open http://localhost:8095 and create your own account. This embedded setup has 
 python -m unittest discover -s tests -v
 ```
 
-A GitHub Actions template is provided for account-free tests and the demo on Windows/Linux; it is not active in this repository. Media rendering is optional. See [CONTRIBUTING.md](CONTRIBUTING.md).
+The [GitHub Actions workflow](.github/workflows/ci.yml) runs account-free unit tests and the synthetic demo on Ubuntu/Windows with Python 3.11 and 3.13. It uses read-only permissions, commit-pinned actions and no provider credentials. The demo report must identify synthetic output, zero external calls and no generated video. Optional media rendering is outside this job. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-### Enable GitHub Actions in your copy
-
-The workflow template is [templates/github-actions/ci.yml](templates/github-actions/ci.yml). Copy it to `.github/workflows/ci.yml` in your own repository and commit it using an identity/token allowed to modify workflows. It tests Python 3.11 and 3.13 on Windows and Linux with no API credentials.
-
-The initial publication's OAuth connection did not have GitHub's `workflow` permission. The template is therefore distributed as a normal file rather than falsely advertising active CI. Local tests passed; a passing GitHub Actions run is not claimed.
+Check the workflow run for the exact reviewed commit before describing hosted checks as passing. A local test or workflow file alone does not establish a successful hosted run. The [portable template](templates/github-actions/ci.yml) contains the same job for forks. Dependabot monitors the GitHub Actions; no runtime Python dependencies are installed for these checks.
 
 All examples are synthetic. No complete creative SaaS chain, automatic factual verification, cost savings or provider endorsement is claimed. The starter is MIT licensed; provider services and separately installed media tools have their own terms.
 
@@ -189,7 +187,7 @@ examples/                  Synthetic storyboard fixture
 workflows/                 Future product-promo design specification
 docs/ADAPTERS.md            Provider implementation guide
 tests/                     Offline tests
-templates/github-actions/  Optional CI workflow to enable in your own copy
+templates/github-actions/  Portable copy of the active CI workflow
 compose.yaml               Optional Activepieces development container
 .env.example               Empty credential reference, not auto-loaded
 ```
@@ -220,5 +218,7 @@ compose.yaml               Optional Activepieces development container
 These are future tasks, not capabilities delivered by this version. A useful contribution is one documented adapter, its contract and failure tests. See [CONTRIBUTING.md](CONTRIBUTING.md) and [adapter guide](docs/ADAPTERS.md).
 
 ## Türkçe kısa başlangıç
+
+[Adım adım Türkçe çevrimdışı başlangıç ve sorun giderme](docs/QUICKSTART.tr.md).
 
 Bu depo kişisel hesaptan bağımsız bir **geliştirme iskeletidir**. Varsayılan demo sentetik veri kullanır ve dış servise bağlanmaz. Yukarıdaki quickstart komutlarıyla başlayın; `aptflow.json` dosyanızı kendinize göre düzenleyin. Gerçek NotebookLM, TinyFish, model ve HeyGen adaptörleri henüz uygulanmamıştır: yalnızca API anahtarı girmek yeterli değildir. Docker ve FFmpeg varsayılan demo için gerekmez; video render için FFmpeg isteğe bağlıdır. Özel bilgiler ve çıktılar Git dışında tutulur.
