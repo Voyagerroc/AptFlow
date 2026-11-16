@@ -15,3 +15,5 @@ Do not include credentials, personal notebook IDs, copied sessions or user-gener
 Describe working behavior separately from planned integrations. Do not claim autonomous tool selection or live provider workflows until implemented and tested.
 
 The starter is distributed under the MIT license. Contributions must be compatible with it; review third-party assets and provider SDK terms separately.
+
+[Türkçe çevrimdışı başlangıç](docs/QUICKSTART.tr.md) · [Security policy](SECURITY.md). Report sensitive findings privately to erol@voyagerroctechnologies.com.
