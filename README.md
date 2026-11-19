@@ -2,18 +2,16 @@
 
 An account-independent Python starter for developers who want to build workflows that assign each task to a specialist tool.
 
-**v0.1.0 pre-release.** The demo is synthetic and runs offline. The NotebookLM, TinyFish, model and HeyGen adapters are stubs, not implemented.
+**Status:** v0.1.0 pre-release · MIT · the demo is synthetic and runs offline · the NotebookLM, TinyFish, model and HeyGen adapters are stubs, not implemented.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/aptflow-demo-dark.webp">
-  <img src="docs/assets/aptflow-demo-light.webp" alt="AptFlow v0.1.0 pre-release beside the real output of its offline demo: status demo_completed, synthetic true, external calls 0, video generated false." width="100%">
+  <img src="docs/assets/aptflow-demo-light.webp" alt="Terminal output of the offline demo: a JSON report with status demo_completed, synthetic true, external_calls 0 and video_generated false." width="100%">
 </picture>
 
-[![CI](https://img.shields.io/github/actions/workflow/status/Voyagerroc/AptFlow/ci.yml?branch=main&style=flat&label=CI)](https://github.com/Voyagerroc/AptFlow/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/github/license/Voyagerroc/AptFlow?style=flat)](LICENSE)
-[![Status: pre-release](https://img.shields.io/badge/status-pre--release-lightgrey?style=flat)](https://github.com/Voyagerroc/AptFlow/releases/tag/v0.1.0)
+*The report the last quickstart command prints is JSON. Shown shortened.*
 
-**Clone, run the synthetic demo, then bring your own adapters and credentials.** No account, API key, Docker installation or network call is required for the default workflow.
+[![CI status](https://github.com/Voyagerroc/AptFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/Voyagerroc/AptFlow/actions/workflows/ci.yml)
 
 ## Quickstart
 
@@ -30,7 +28,7 @@ python aptflow.py run --out outputs/my-first-run
 
 Windows users can use `py -3.11`; some Unix systems use `python3` instead of `python`.
 
-Expected result: the last command prints `status: demo_completed`, `synthetic: true`, `external_calls: 0` and `video_generated: false`; the image above shows that output, shortened. Inspect `outputs/my-first-run/storyboard.json` and `outputs/my-first-run/report.json`.
+Expected result: the last command prints a JSON report that contains `"status": "demo_completed"`, `"synthetic": true`, `"external_calls": 0` and `"video_generated": false`; the image above shows that output, shortened. Inspect `outputs/my-first-run/storyboard.json` and `outputs/my-first-run/report.json`.
 
 The last command writes `storyboard.json` and `report.json`. Every mock result is explicitly synthetic. Every run requires a fresh output directory and will not overwrite earlier work. The demo makes zero external calls.
 
