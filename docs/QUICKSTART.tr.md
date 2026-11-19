@@ -15,7 +15,7 @@ python aptflow.py plan
 python aptflow.py run --out outputs/ilk-demo
 ```
 
-- `init`, size ait ve Git tarafından yok sayılan `aptflow.json` dosyasını oluşturur.
+- `init`, size ait ve Git tarafından yok sayılan `aptflow.json` dosyasını oluşturur. Adaptörleri ve isteğe bağlı belleği bu dosyada kendinize göre düzenleyin.
 - `doctor`, seçilen aşamaları ve hazır olma durumunu gösterir. FFmpeg bilgisi yalnızca isteğe bağlı render içindir.
 - `plan`, açık rol/adaptör eşleşmesini gösterir; kendiliğinden canlı araç seçmez.
 - `run`, yeni çıktı klasöründe `storyboard.json` ve `report.json` oluşturur.
@@ -48,7 +48,7 @@ Aynı örneği tekrar çalıştırırken daha önce kullanılmamış başka bir 
 
 ## İsteğe bağlı yerel video render
 
-FFmpeg/ffprobe ve izinli bir TrueType fontla yerel başlık kartları render edilebilir; bu, gerçek bir avatar hizmeti değildir. Sürüme uygun seçenekler için `python aptflow.py render --help` ve [ana README](../README.md) içindeki render bölümüne bakın. FFmpeg render bu başlangıç doğrulamasında çalıştırılmadı.
+FFmpeg/ffprobe ve izinli bir TrueType fontla yerel başlık kartları render edilebilir; bu, gerçek bir avatar hizmeti değildir. Sürüme uygun seçenekler için `python aptflow.py render --help` ve [komut başvurusundaki](CLI.md) render bölümüne (İngilizce) bakın. FFmpeg render bu başlangıç doğrulamasında çalıştırılmadı.
 
 ## Katkı ve doğrulama
 
@@ -57,3 +57,7 @@ python -m unittest discover -s tests -v
 ```
 
 Yerel Windows/Python 3.11.9 kontrolünde 12 test geçti; farklı bir sürümün sonucu [GitHub Actions kontrollerinde](https://github.com/Voyagerroc/AptFlow/actions/workflows/ci.yml) ayrıca değerlendirilmelidir. Sentetik fixture kullanın; kimlik bilgisi, özel medya veya kişisel notebook kimliği paylaşmayın. [CONTRIBUTING](../CONTRIBUTING.md) ve [güvenlik politikası](../SECURITY.md) kapsamı açıklar.
+
+---
+
+Erol Taşcı, Voyagerroc Technologies · [voyagerroctechnologies.com](https://voyagerroctechnologies.com/)
