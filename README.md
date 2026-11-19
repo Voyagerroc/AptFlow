@@ -1,23 +1,19 @@
 # AptFlow
 
-[![Account-free checks](https://github.com/Voyagerroc/AptFlow/actions/workflows/ci.yml/badge.svg)](https://github.com/Voyagerroc/AptFlow/actions/workflows/ci.yml)
+An account-independent Python starter for developers who want to build workflows that assign each task to a specialist tool.
 
-An account-independent starter for workflows that assign each task to a specialist tool.
+**v0.1.0 pre-release.** The demo is synthetic and runs offline. The NotebookLM, TinyFish, model and HeyGen adapters are stubs, not implemented.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/aptflow-demo-dark.webp">
+  <img src="docs/assets/aptflow-demo-light.webp" alt="AptFlow v0.1.0 pre-release beside the real output of its offline demo: status demo_completed, synthetic true, external calls 0, video generated false." width="100%">
+</picture>
+
+[![CI](https://img.shields.io/github/actions/workflow/status/Voyagerroc/AptFlow/ci.yml?branch=main&style=flat&label=CI)](https://github.com/Voyagerroc/AptFlow/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/github/license/Voyagerroc/AptFlow?style=flat)](LICENSE)
+[![Status: pre-release](https://img.shields.io/badge/status-pre--release-lightgrey?style=flat)](https://github.com/Voyagerroc/AptFlow/releases/tag/v0.1.0)
 
 **Clone, run the synthetic demo, then bring your own adapters and credentials.** No account, API key, Docker installation or network call is required for the default workflow.
-
-## Implementation status
-
-| Component | Status |
-|---|---|
-| Configuration, preflight and explicit workflow stages | Implemented |
-| Account-free memory → research → script → storyboard demo | Implemented, synthetic data |
-| Optional local FFmpeg rendering and media checks | Implemented |
-| NotebookLM / TinyFish / model / HeyGen adapters | Extension stubs, not implemented |
-| Activepieces workflow import | Not implemented; optional development container only |
-| Canva / Descript | Future adapter ideas |
-
-The mock video step produces a storyboard, not an avatar video. Selecting a provider or supplying credentials does not implement its adapter. No provider request is made by this starter.
 
 ## Quickstart
 
@@ -34,69 +30,35 @@ python aptflow.py run --out outputs/my-first-run
 
 Windows users can use `py -3.11`; some Unix systems use `python3` instead of `python`.
 
-Expected result: the last command prints `status: demo_completed`, `synthetic: true`, `external_calls: 0` and `video_generated: false`. Inspect `outputs/my-first-run/storyboard.json` and `outputs/my-first-run/report.json`.
+Expected result: the last command prints `status: demo_completed`, `synthetic: true`, `external_calls: 0` and `video_generated: false`; the image above shows that output, shortened. Inspect `outputs/my-first-run/storyboard.json` and `outputs/my-first-run/report.json`.
 
 The last command writes `storyboard.json` and `report.json`. Every mock result is explicitly synthetic. Every run requires a fresh output directory and will not overwrite earlier work. The demo makes zero external calls.
 
 `init` creates **your** ignored `aptflow.json`; it never overwrites an existing configuration. Change adapters and optional memory there. No personal notebook, account, source ID or machine path is included in the bundled demo.
 
-### Optional CLI installation
+More commands, exit codes, installation as `aptflow` and optional video rendering: [command reference](docs/CLI.md). Something went wrong: [troubleshooting](docs/TROUBLESHOOTING.md).
 
-In a virtual environment:
+## Status
 
-```console
-python -m pip install -e .
-aptflow --help
+| Component | Status |
+|---|---|
+| Configuration, preflight and explicit workflow stages | Implemented |
+| Account-free memory → research → script → storyboard demo | Implemented, synthetic data |
+| Optional local FFmpeg rendering and media checks | Implemented |
+| NotebookLM / TinyFish / model / HeyGen adapters | Extension stubs, not implemented |
+| Activepieces workflow import | Not implemented; optional development container only |
+| Canva / Descript | Future adapter ideas |
+
+The mock video step produces a storyboard, not an avatar video. Selecting a provider or supplying credentials does not implement its adapter. No provider request is made by this starter.
+
+## Architecture
+
+```text
+Your config → preflight → memory (optional) → research → script → video/storyboard
+                                                           → validation → local artifacts
 ```
 
-Running from a checkout requires no installation. Installation requires the build backend in `pyproject.toml`, which may be downloaded if absent.
-
-Create an isolated environment first if desired:
-
-```powershell
-# Windows PowerShell; activation is optional.
-python -m venv .venv
-.venv\Scripts\python.exe -m pip install -e .
-.venv\Scripts\aptflow.exe --help
-```
-
-```sh
-# Linux/macOS
-python3 -m venv .venv
-.venv/bin/python -m pip install -e .
-.venv/bin/aptflow --help
-```
-
-## CLI reference
-
-All commands can also be invoked with the installed `aptflow` entry point.
-
-| Command | Purpose | External calls |
-|---|---|---|
-| `python aptflow.py --version` | Print the version without loading configuration | None |
-| `python aptflow.py init [--config PATH]` | Create a demo config; refuses to overwrite it | None |
-| `python aptflow.py doctor [--config PATH]` | Check adapters and required variable names | None |
-| `python aptflow.py plan [--config PATH]` | Print explicit stage mapping and readiness | None |
-| `python aptflow.py run --out PATH [--config PATH]` | Execute the configured mock workflow | None in this starter |
-| `python aptflow.py render BUNDLE --out PATH [--font PATH]` | Render a local title-card MP4 | None |
-
-Both `python aptflow.py --version` and the installed `aptflow --version` use the version declared in `aptflow_core/__init__.py`. The checkout does not require installed package metadata.
-
-Exit codes: `0` for success; `1` for an execution/configuration error or failed `doctor` readiness; `2` for invalid CLI arguments. `plan` can return `0` while reporting `ready: false`: it inspects a configuration rather than executing it.
-
-For a custom `init --config PATH`, its parent directory must already exist. Workflow output directories are created automatically and must not already exist.
-
-## Optional video rendering
-
-Install FFmpeg with drawtext/libx264, ffprobe and a TrueType font separately:
-
-```console
-python aptflow.py render outputs/my-first-run/storyboard.json --out outputs/my-first-video
-```
-
-Windows Arial, Linux DejaVu Sans and macOS Arial locations are tried as defaults. If none exists, pass `--font /path/to/font.ttf`. Rendering is silent title cards, entirely local. It writes `demo.mp4`, an input snapshot, source references, SHA-256 and a report checking duration, dimensions and full decoding. Source references are provenance; they do not automatically establish factual truth. Fonts and FFmpeg are not redistributed.
-
-`examples/aptflow-demo.json` is a standalone synthetic fixture. Its example.com references are fictional, not live research.
+This starter uses explicit role mapping, not autonomous tool selection. `workflows/product-promo.json` is a design specification, not an importable Activepieces flow.
 
 ## Configure your own tools
 
@@ -137,16 +99,7 @@ The live example intentionally fails readiness because provider adapters are **s
 
 These are proposed configuration names, not working connections. Inject credentials into the process environment for your future adapter; never put real values in a README, issue, pull request or committed JSON file.
 
-See [adapter guide](docs/ADAPTERS.md). NotebookLM authentication is optional and user-managed; a notebook ID alone is not authentication. Do not copy someone else's sessions, private memories or credentials.
-
-## Architecture
-
-```text
-Your config → preflight → memory (optional) → research → script → video/storyboard
-                                                           → validation → local artifacts
-```
-
-This starter uses explicit role mapping, not autonomous tool selection. `workflows/product-promo.json` is a design specification, not an importable Activepieces flow.
+See the [adapter guide](docs/ADAPTERS.md). NotebookLM authentication is optional and user-managed; a notebook ID alone is not authentication. Do not copy someone else's sessions, private memories or credentials.
 
 ## Optional Activepieces backend
 
@@ -157,7 +110,7 @@ docker compose config --quiet
 docker compose up -d
 ```
 
-Open http://localhost:8095 and create your own account. This embedded setup has migration limitations and is not for production. The image defaults to latest for evaluation; pin a tested digest before a reproducible release. Compose has not been validated on this machine.
+Open http://localhost:8095 and create your own account. This embedded setup has migration limitations and is not for production. The image defaults to latest for evaluation; pin a tested digest before a reproducible release. This Compose file has not been validated.
 
 ## Development
 
@@ -165,7 +118,7 @@ Open http://localhost:8095 and create your own account. This embedded setup has 
 python -m unittest discover -s tests -v
 ```
 
-The [GitHub Actions workflow](.github/workflows/ci.yml) runs account-free unit tests and the synthetic demo on Ubuntu/Windows with Python 3.11 and 3.13. It uses read-only permissions, commit-pinned actions and no provider credentials. The demo report must identify synthetic output, zero external calls and no generated video. Optional media rendering is outside this job. See [CONTRIBUTING.md](CONTRIBUTING.md).
+The [GitHub Actions workflow](.github/workflows/ci.yml) runs account-free unit tests and the synthetic demo on Ubuntu/Windows with Python 3.11 and 3.13. It uses read-only permissions, commit-pinned actions and no provider credentials. The demo report must identify synthetic output, zero external calls and no generated video. Optional media rendering is outside this job.
 
 Check the workflow run for the exact reviewed commit before describing hosted checks as passing. A local test or workflow file alone does not establish a successful hosted run. The [portable template](templates/github-actions/ci.yml) contains the same job for forks. Dependabot monitors the GitHub Actions; no runtime Python dependencies are installed for these checks.
 
@@ -185,28 +138,15 @@ aptflow_core/
 config/live.example.json   Non-working live extension example
 examples/                  Synthetic storyboard fixture
 workflows/                 Future product-promo design specification
-docs/ADAPTERS.md            Provider implementation guide
+docs/                      Adapter guide, command reference, troubleshooting,
+                           Turkish quickstart and the README images
 tests/                     Offline tests
 templates/github-actions/  Portable copy of the active CI workflow
 compose.yaml               Optional Activepieces development container
 .env.example               Empty credential reference, not auto-loaded
 ```
 
-## Troubleshooting
-
-| Symptom | What to do |
-|---|---|
-| Config file does not exist | Run `python aptflow.py init` first, or pass `--config PATH` |
-| Config already exists | Edit it or initialize a different path; init will not replace it |
-| Output directory already exists | Choose a new `--out` path; previous work is preserved |
-| Live doctor reports not ready | Expected: implement/register the provider adapters before live use |
-| An API key appears to have no effect | The starter does not implement live APIs or load .env automatically |
-| FFmpeg/ffprobe is missing | Install both for render, or use the storyboard-only demo |
-| Font is missing | Pass `--font` pointing to your own existing TrueType font |
-| FFmpeg reports drawtext or libx264 missing | Use a build with those features; the core demo does not need FFmpeg |
-| Video has no voice/avatar | Expected for local title-card rendering; no avatar service is called |
-
-## Roadmap and contribution scope
+## Contribute
 
 - Implement one opt-in research adapter and add offline response fixtures.
 - Add a model adapter with structured output and measurable usage.
@@ -215,10 +155,10 @@ compose.yaml               Optional Activepieces development container
 - Evaluate a real Activepieces export only after the chosen connections work.
 - Add dynamic routing only with explicit capability rules and evaluation cases.
 
-These are future tasks, not capabilities delivered by this version. A useful contribution is one documented adapter, its contract and failure tests. See [CONTRIBUTING.md](CONTRIBUTING.md) and [adapter guide](docs/ADAPTERS.md).
+These are future tasks, not capabilities delivered by this version. A useful contribution is one documented adapter, its contract and failure tests. See [CONTRIBUTING.md](CONTRIBUTING.md) and the [adapter guide](docs/ADAPTERS.md).
 
-## Türkçe kısa başlangıç
+Türkçe: [adım adım çevrimdışı başlangıç ve sorun giderme](docs/QUICKSTART.tr.md).
 
-[Adım adım Türkçe çevrimdışı başlangıç ve sorun giderme](docs/QUICKSTART.tr.md).
+---
 
-Bu depo kişisel hesaptan bağımsız bir **geliştirme iskeletidir**. Varsayılan demo sentetik veri kullanır ve dış servise bağlanmaz. Yukarıdaki quickstart komutlarıyla başlayın; `aptflow.json` dosyanızı kendinize göre düzenleyin. Gerçek NotebookLM, TinyFish, model ve HeyGen adaptörleri henüz uygulanmamıştır: yalnızca API anahtarı girmek yeterli değildir. Docker ve FFmpeg varsayılan demo için gerekmez; video render için FFmpeg isteğe bağlıdır. Özel bilgiler ve çıktılar Git dışında tutulur.
+Made by Erol Tasci at Voyagerroc Technologies · [voyagerroctechnologies.com](https://voyagerroctechnologies.com/en/)
