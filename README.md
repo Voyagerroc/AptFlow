@@ -1,8 +1,20 @@
 # AptFlow
 
-An account-independent Python starter for developers who want to build workflows that assign each task to a specialist tool.
+A small Python starter kit that shows how to chain specialist tools (research, script writing, video) into one content workflow, with an offline demo you can run in a minute.
 
-**Status:** v0.1.0 pre-release · MIT · the demo is synthetic and runs offline · the NotebookLM, TinyFish, model and HeyGen adapters are stubs, not implemented.
+> **Türkçe özet:** AptFlow, araştırma, senaryo ve video gibi adımları her biri için ayrı bir uzman araca atayan iş akışları kurmak isteyen geliştiriciler için bir Python başlangıç projesidir. Varsayılan demo tamamen çevrimdışı çalışır, hesap veya API anahtarı gerektirmez ve yalnızca sentetik çıktı üretir. Gerçek servis bağlantıları (NotebookLM, TinyFish, HeyGen vb.) henüz uygulanmamış taslaklardır.
+
+**Who it is for:** Python developers and automation builders who want a clean, tested skeleton for a multi-tool content pipeline (memory, research, script, storyboard/video) and plan to plug in their own providers. It is not a finished app for end users.
+
+**What it does today**
+
+- Validates a strict JSON configuration and runs preflight checks before anything executes.
+- Runs an account-free memory, research, script and storyboard demo with synthetic data and zero external calls.
+- Writes inspectable artifacts (`storyboard.json`, `report.json`) to a fresh output folder, never overwriting earlier runs.
+- Optionally renders a local video with FFmpeg.
+- Defines adapter contracts so you can add real providers later.
+
+**Status:** v0.1.0 pre-release (developer starter) · MIT · the demo is synthetic and runs offline · the NotebookLM, TinyFish, model and HeyGen adapters are stubs, not implemented.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/aptflow-demo-dark.webp">
